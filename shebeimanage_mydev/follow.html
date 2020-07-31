@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/follow.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var request_url = localStorage.getItem('request_url');
+		</script>
+		<script type="text/html" id="follow_texts">
+			<h>关注的设备</h>
+			<ul class="mui-table-view">
+				<% if(list.length==0) {%>
+					<li class="mui-table-view-cell">您当前暂无关注的设备!</li>
+				<% } %>
+			<% for(var i = 0;i < list.length;i++){ %>	
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].devName%></li>
+							<% if(list[i].devWorkStatus=='1') {%>
+								<span class="mui-badge mui-badge-success"  style="position: absolute;top:11px;left:35%;"><%= "正常"%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='2') {%>
+								<span class="mui-badge mui-badge-danger"  style="position: absolute;top:11px;left:35%;"><%= "报废"%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='3') {%>
+								<span class="mui-badge mui-badge-warning"  style="position: absolute;top:11px;left:35%;"><%= "故障"%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='4') {%>
+								<span class="mui-badge mui-badge-primary"  style="position: absolute;top:11px;left:35%;"><%= "维修"%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='5') {%>
+								<span class="mui-badge mui-badge-purple"  style="position: absolute;top:11px;left:35%;"><%= "待报废"%></span>
+							<% } %>
+							<button style="position: absolute;top:6px;right:28%;height:28px;line-height: 15px;" onclick="more(<%= list[i].devId%>,request_url)">更多</button>
+							<button style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;" onclick="undo_follow(request_url,<%= list[i].devId%>)">取消关注</button>
+					</div>		
+				<% } %>
+			</ul>
+				</script>
+	</head>
+
+	<body onload="follow(request_url)">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的关注</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+		<div id="follow_tb"></div>
+		<nav class="mui-bar mui-bar-tab" style="touch-action: none;" onclick = "follow_m(request_rul)">
+			<a class="mui-tab-item" href="#tabbar-with-search">
+				<span class="mui-icon mui-icon-loop"></span>
+				<span class="mui-tab-label">刷新</span>
+			</a>
+		</nav>
+		<script type="text/javascript">
+					mui.init()
+					var request_url = localStorage.getItem('request_url');
+				</script>
+	</body>
+
+</html>

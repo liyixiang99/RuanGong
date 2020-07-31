@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/fun.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+
+		</script>
+		<title>Simple Pie</title>
+
+		<link href="./css/styles.css" rel="stylesheet" />
+
+		<style>
+			#chart {
+				max-width: 480px;
+				margin: 35px auto;
+				padding: 0;
+				margin-top: 0;
+			}
+
+			.actions {
+				top: -10px;
+				position: relative;
+				z-index: 10;
+				max-width: 400px;
+				margin: 0 auto;
+			}
+
+			button {
+				color: #fff;
+				background: #20b2aa;
+				padding: 5px 10px;
+				margin: 6px;
+				font-weight: bold;
+				font-size: 13px;
+				border-radius: 5px;
+			}
+
+			p {
+				margin: 10px 0;
+			}
+
+			@media only screen and (max-width: 480px) {
+				.actions {
+					margin-top: 0;
+					left: 0
+				}
+			}
+		</style>
+
+		<script>
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+				)
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+				)
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+				)
+		</script>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+
+	</head>
+
+	<body>
+		<div>
+			<div class="chart-wrap">
+				<div id="chart"></div>
+			</div>
+
+			<div class="actions">
+				<button id="add">
+					+ ADD
+				</button>
+
+				<button id="remove">
+					- REMOVE
+				</button>
+
+				<button id="randomize">
+					RANDOMINDEX
+				</button>
+
+				<button id="reset">
+					RESET
+				</button>
+			</div>
+		</div>
+		<script>
+			var chart
+			var option
+			function removeData() {
+				var arr = chart.w.globals.series.slice()
+				stack[stackIndex++] = arr.pop()
+				return arr;
+			}
+
+			function randomize() {
+				return chart.w.globals.series.map(function() {
+					return Math.floor(Math.random() * (100 - 1 + 1)) + 1
+				})
+			}
+
+			function randomIndex() {
+				var arr = chart.w.globals.series.slice()
+				let flag = new Array()
+				let tempArr = new Array()
+				let t = 0
+				let i = 0
+				let value
+				while (typeof((value = arr.pop())) != "undefined") {
+					console.log(value)
+					flag[t] = 0
+					tempArr[t++] = value
+				}
+				for (i = 0; i < t; i++) {
+					let index
+					while (flag[(index = Math.floor(Math.random() * t))] == 1) {}
+					flag[index] = 1
+					arr.push(tempArr[index])
+				}
+				return arr
+			}
+
+			function reset() {
+				return option.series
+			}
+
+			function appendData() {
+				var arr = chart.w.globals.series.slice()
+				if (stackIndex == 0) {
+					arr.push(Math.floor(Math.random() * 5) + 1)
+				} else {
+					arr.push(stack[--stackIndex])
+				}
+				return arr;
+			}
+
+			function draw(data, label) {
+				option = {
+					series: data,
+					chart: {
+						width: 380,
+						type: 'donut',
+					},
+					dataLabels: {
+						enabled: true
+					},
+					// title: {
+					// 	text: 'Your Equipment Distribution',
+					// 	align: 'center',
+					// 	floating: true
+					// },
+					labels: label,
+					responsive: [{
+						breakpoint: 480,
+						options: {
+							chart: {
+								width: 200
+							},
+							legend: {
+								show: false
+							}
+						}
+					}],
+					legend: {
+						position: 'right',
+						offsetY: 0,
+						height: 230,
+					}
+				};
+				chart = new ApexCharts(document.querySelector("#chart"), option);
+				chart.render();
+			}
+		</script>
+		<script>
+			var stack = new Array()
+			var stackIndex = 0
+			mui.init();
+			var t = 0
+			var flagMyEquipment = 0
+			var flagTempEquipment = 0
+			var equipments = new Array()
+			var equipmentsCategories = new Array()
+			var colors = new Array()
+			var colorsList = ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+				'#f48024', '#69d2e7'
+			]
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				mui('body').on('click', 'a', function() {
+					document.location.href = this.href;
+				});
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					user = self.user;
+				});
+				user = self.user;
+				var request_url = localStorage.getItem('request_url');
+				var getMyEquipmentsUrl = request_url + 'devManagerAccount?managerAccount=' + user.userAccount
+				var getTempEquipmentsUrl = request_url + 'devDevUserAccount?userAccount=' + user.userAccount;
+				mui.ajax({
+					type: 'GET',
+					url: getMyEquipmentsUrl,
+					dataType: "json",
+					success: function(data) {
+						if ((data.data != null) && (user.userAuthority <= 3)) {
+							for (var i = 0; i < data.data.length; i++) {
+								let item = data.data[i].devName
+								if (equipmentsCategories.indexOf(item) == -1) {
+									equipmentsCategories[t] = item
+									equipments[t] = 1
+									colors[t] = colorsList[t]
+									t++
+								} else {
+									equipments[equipmentsCategories.indexOf(item)]++
+								}
+							}
+						}
+						console.log("arrive")
+						flagTempEquipment = 1
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("服务器内部出错！");
+					}
+				});
+				mui.ajax({
+					type: 'GET',
+					url: getTempEquipmentsUrl,
+					dataType: "json",
+					success: function(data) {
+						if ((data.data != null) && (user.userAuthority <= 3)) {
+							for (var i = 0; i < data.data.length; i++) {
+								let item = data.data[i].devName
+								if (equipmentsCategories.indexOf(item) == -1) {
+									equipmentsCategories[t] = item
+									equipments[t] = 1
+									colors[t] = colorsList[t]
+									t++
+								} else {
+									equipments[equipmentsCategories.indexOf(item)]++
+								}
+							}
+						}
+						console.log("arrive")
+						flagTempEquipment = 1
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("服务器内部出错！");
+					}
+				});
+			})
+
+			function sleep(interval) {
+				return new Promise(resolve => {
+					setTimeout(resolve, interval);
+				})
+			}
+
+			async function oneAsync(equipments, equipmentsCategories) {
+				await sleep(500);
+				draw(equipments, equipmentsCategories)
+				document.querySelector("#randomize").addEventListener("click", function() {
+					chart.updateSeries(randomIndex())
+				})
+
+				document.querySelector("#add").addEventListener("click", function() {
+					chart.updateSeries(appendData())
+				})
+
+				document.querySelector("#remove").addEventListener("click", function() {
+					chart.updateSeries(removeData())
+				})
+
+				document.querySelector("#reset").addEventListener("click", function() {
+					chart.updateSeries(reset())
+				})
+			}
+
+			oneAsync(equipments, equipmentsCategories)
+		</script>
+
+
+	</body>
+</html>

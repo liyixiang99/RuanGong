@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/fun.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var user;
+			mui('body').on('click', 'a', function() {
+				document.location.href = this.href;
+			});
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				user = self.user;
+			});
+			window.addEventListener('refresh', function(e){//执行刷新
+			    location.reload();
+			 });
+		</script>
+	</head>
+
+	<body onload="load_xian()">
+		<!-- <header class="mui-bar mui-bar-nav">
+					<h1 class="mui-title">主页</h1>
+				</header>
+				<div class="mui-content" style="margin-top:20px;">
+				</div>
+				<div style="margin-top:10px;">
+					<button type="button" onclick="to_myequ(user)" style="margin-left: 30px; margin-top: 100px; width: 70px; height: 70px; border-radius: 50px; background: rgba(100, 177, 245, 0.8); font-size: 12px;">我的设备</button>
+					<button type="button" style="margin-left: 30px; margin-top: 100px; width: 70px; height: 70px; border-radius: 50px; background: rgba(100, 177, 245, 0.8); font-size: 12px;">我的申请</button>
+					<button type="button" style="margin-left: -180px; margin-top: 250px; width: 120px; height: 70px; background: rgba(100, 177, 245, 0.8); font-size: 12px;">设备监控</button>
+				</div>	
+				<nav class="mui-bar mui-bar-tab">
+					<a class="mui-tab-item" href="#tabbar-with-home" onclick="to_main(user)">
+						<span class="mui-icon mui-icon-home"></span>
+						<span class="mui-tab-label">主页</span>
+					</a>
+					<a class="mui-tab-item" href="#tabbar-with-search" onclick="to_arrange(user)">
+						<span class="mui-icon mui-icon-list"></span>
+						<span class="mui-tab-label">代办</span>
+					</a>
+					<a class="mui-tab-item" href="#tabbar-with-person" onclick="to_mine(user)">
+						<span class="mui-icon mui-icon-person"></span>
+						<span class="mui-tab-label">我的</span>
+					</a>
+				</nav> -->
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">主页</h1>
+		</header>
+
+
+<!-- 	<div class="mui-content" style="background-color: #c1ecff;height: 190px;"></div>
+		<div class="mui-content" style="background-color: #385acc; height: 190px;  width: 50%;"></div>
+		<div class="mui-content" style="background-color: #C4C400; height: 190px; margin-top:-190px; margin-left: 50%; width:50%"></div>
+		<div class="mui-content" style="background-color: #FFC78E; height: 250px;"></div>
+		<img src="images/3.jpg" id="head_img" style="position: absolute; margin-top: -560px; margin-left: 4%; border-radius:100px; width:100px; height:100px" />
+		<h1 id="main_username" style="position: absolute; margin-top: -500px; margin-left: 32%"></h1>
+
+
+		<img src="images/zi30.png" style="position: absolute; margin-top: -420px; margin-left: 9%; width:120px; height:120px">
+		<button onclick="to_myequ(user)" type="button" style="position: absolute; margin-top: -440px; width: 50%; height: 190px;  background: transparent; font-size:16px; color: #ffffff; line-height: 330px;">我的设备</button>
+
+
+
+		<img src="images/zi10.png" style="position: absolute; margin-top: -410px; margin-left: 63%; width:110px; height:110px">
+		<button onclick="to_myapp(user)" type="button" style="position: absolute; margin-top: -440px; margin-left: 50%; width: 50%; height: 190px;  background: transparent; font-size: 16px; color: #ffffff; line-height: 330px;">我的申请</button>
+
+
+
+
+		<img src="images/zi27.png" style="position: absolute; margin-top: -180px; margin-left: 10%; width:110px; height:110px">
+		<button onclick="to_checkEquipment(user)" type="button" style="position: absolute; margin-top: -250px; width: 100%; height: 250px;  background: transparent;"></button>
+		<h1 style="margin-left: 50%; margin-top: -120px;font-size: 16px;">设备监控</h1> -->
+
+
+
+		<div class="mui-content" style="background-color: #c1ecff; height: 140px; position: absolute;  width: 100%; margin-top: 40px;"></div>
+		<img src="images/3.jpg" id="head_img" style="position: absolute; margin-top: 65px; margin-left: 4%; border-radius:100px; width:100px; height:100px" />
+		<h1 id="main_username" style="position: absolute; margin-top: 130px; margin-left: 33%"></h1>
+		
+		<iframe src="Vis.html" width="100%" height="600" scrolling="auto" frameborder="no" style="position: absolute; margin-top: 180px;"></iframe>
+		
+		<div class="mui-content" style="background-color: #385acc; height: 140px;  width: 50%; position: absolute; margin-top: 440px;"></div>
+		<img src="images/zi30.png" style="position: absolute; margin-top: 450px; margin-left: 9%; width:100px; height:100px">
+		<button onclick="to_myequ(user)" type="button" style="position: absolute; margin-top: 440px; width: 50%; height: 140px;  background: transparent; font-size:16px; color: #ffffff; line-height: 240px;">我的设备</button>
+		
+		<div class="mui-content" style="background-color: #C4C400; height: 140px; margin-left: 50%; width:50%; position: absolute; margin-top: 440px;"></div>
+		<img src="images/zi10.png" style="position: absolute; margin-top: 450px; margin-left: 64%; width:90px; height:90px">
+		<button onclick="to_myapp(user)" type="button" style="position: absolute; margin-top: 440px; margin-left: 50%; width: 50%; height: 140px;  background: transparent; font-size: 16px; color: #ffffff; line-height: 240px;">我的申请</button>
+		
+		
+		<div class="mui-content" style="background-color: #FFC78E; height: 140px; position: absolute; margin-top: 580px; width: 50%;"></div>
+		<img src="images/zi27.png" style="position: absolute; margin-top: 600px; margin-left: 14%; width:80px; height:80px">
+		<button onclick="to_checkEquipment(user)" type="button" style="position: absolute; margin-top: 580px; width: 50%; height: 140px;  background: transparent; font-size: 16px; color: #ffffff; line-height: 240px;">设备监控</button>
+		
+		
+		<div class="mui-content" style="background-color: #78c4b8; height: 140px; margin-left: 50%; width:50%; position: absolute; margin-top: 580px;"></div>
+		<img src="images/zi4.png" style="position: absolute; margin-top: 615px; margin-left: 64%; width:90px; height:55px">
+		<button onclick = "to_follow(user)" type="button" style="position: absolute; margin-top: 580px; margin-left: 50%; width: 50%; height: 140px;  background: transparent; font-size: 16px; color: #ffffff; line-height: 240px;">我的关注</button>
+		
+		
+		<div class="mui-content" style="background-color: #ffffff; height: 60px; width:100%; position: absolute; margin-top: 720px;"></div>
+
+
+
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="#tabbar-with-home" style="touch-action: none;">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">主页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-search" style="touch-action: none;" onclick="to_arrange(user)">
+				<span class="mui-icon mui-icon-list"></span>
+				<span class="mui-tab-label">待办</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-person" style="touch-action: none;" onclick="to_mine(user)">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+	</body>
+</html>

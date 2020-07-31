@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/apply.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/template.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+				　　　　 //获得父页面的webview
+				        var list = plus.webview.currentWebview().opener();
+				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+				        mui.fire(list, 'refresh');
+				        //返回true,继续页面关闭逻辑
+				        return true;
+				    }
+			});
+			localStorage.setItem('request_url', 'http://aaedion.club:8002/api/'); //前半部分固定URL
+		</script>
+		<script type="text/html" id="temp_now_shen">
+			<ul class="mui-table-view">
+			<% if(list.length==0) {%>
+				<li class="mui-table-view-cell">您当前暂无申请中!</li>
+			<% } %>
+			<% for(var i = 0;i < list.length;i++){ %>		
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].tokenId%></li>
+							<button onclick="app_more(1,<%=i%>,request_url)" style="position: absolute;top:6px;right:27%;height:28px;line-height: 15px;">更多</button>
+							<button onclick="back_app(<%= list[i].logId%>,request_url)" style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;">取消申请</button>
+					</div>		
+				<% } %>
+			</ul>
+				</script>
+		<script type="text/html" id="temp_al_shen">
+			<ul class="mui-table-view">
+			<% if(list.length==0) {%>
+				<li class="mui-table-view-cell">您当前暂无已申请!</li>
+			<% } %>
+			<% for(var i = 0;i < list.length;i++){ %>		
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell" style="height: 40px;"><!-- <%= list[i].tokenId%> --></li>
+						<% if(list[i].tokenId=='修理申请') {%>
+							<li class="mui-badge mui-badge-warning mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">修理申请</li>
+						<% } %>
+						<% if(list[i].tokenId=='确认申请') {%>
+							<li class="mui-badge mui-badge-primary mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">确认申请</li>
+						<% } %>
+						<% if(list[i].tokenId=='故障申请') {%>
+							<li class="mui-badge mui-badge-danger mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">故障申请</li>
+						<% } %>
+						<% if(list[i].tokenId=='报废申请') {%>
+							<li class="mui-badge mui-badge-purple mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">报废申请</li>
+						<% } %>
+						<% if(list[i].tokenId=='购置申请') {%>
+							<li class="mui-badge mui-badge-success mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">购置申请</li>
+						<% } %>
+						<% if(list[i].tokenId=='报修申请') {%>
+							<li class="mui-badge mui-badge-red mui-badge-inverted" style="position: absolute;top:6px;left:3%;font-size: 18px;line-height: 30px;">报修申请</li>
+						<% } %>
+						<button onclick="app_more(0,<%=i%>,request_url)" style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;">更多</button>
+					</div>		
+				<% } %>
+			</ul>
+				</script>
+	</head>
+
+	<body onload="my_apply(request_url)">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的申请</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;"></div>
+
+
+
+		<h>申请中</h>
+		<div id="shen_now"></div>
+		<div class="mui-content" style="margin-top:-35px;"></div>
+		<h>已申请</h>
+		<div id="shen_al"></div>
+		<script type="text/javascript">
+			mui.init()
+			var request_url = localStorage.getItem('request_url');
+		</script>
+
+	</body>
+
+</html>

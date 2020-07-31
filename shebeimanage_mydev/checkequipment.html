@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/checkequ.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/template.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<iframe src="myEquipmentVis.html" width="100%" height="600" scrolling="auto" frameborder="no" style="margin-top: 45px;"></iframe>
+		<iframe src="myEquipmentVis1.html" width="100%" height="600" scrolling="auto" frameborder="no" style="margin-top: -200px;"></iframe>
+		<script type="text/html" id="temp_check">
+			<ul class="mui-table-view" style="margin-top: -100px;">
+		<% for(var i = 0;i < list.length;i++){ %>
+				<div class="mui-table-view">
+					<li class="mui-table-view-cell"><%= list[i].devName%></li>
+						<% if(list[i].devWorkStatus=='正常') {%>
+							<span class="mui-badge mui-badge-success"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+						<% } %>
+						<% if(list[i].devWorkStatus=='报废') {%>
+							<span class="mui-badge mui-badge-danger"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+						<% } %>
+						<% if(list[i].devWorkStatus=='故障') {%>
+							<span class="mui-badge mui-badge-warning"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+						<% } %>
+						<% if(list[i].devWorkStatus=='维修') {%>
+							<span class="mui-badge mui-badge-primary"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+						<% } %>
+						<% if(list[i].devWorkStatus=='待报废') {%>
+							<span class="mui-badge mui-badge-purple"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+						<% } %>
+						<button style="position: absolute; top:6px; right:20px; height:28px; line-height: 15px;" onclick="more(<%=i%>,request_url)">更多</button>
+				</div>
+			<% } %>
+		</ul>
+		</script>
+	</head>
+
+	<body onload="check_equ(request_url)">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设备监控</h1>
+		</header>
+		<div id="c_euq" class="mui-content" style="margin-top:-300px;"></div>
+		<script type="text/javascript">
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</body>
+
+</html>

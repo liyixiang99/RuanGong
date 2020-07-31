@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/search.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/main.js"></script>
+		<!-- <script src="js/myequ.js"></script> -->
+		<script type="text/javascript">
+			mui.init();
+			localStorage.setItem('request_url','http://aaedion.club:8002/api/');//前半部分固定URL
+		</script>
+		<script type="text/html" id="temp_stable_wzj">
+			<h>可租用设备</h>
+			<ul class="mui-table-view">
+			<% for(var i = 0;i < list.length;i++){ %>
+					<% if(list[i].devStatus == 1 && list[i].devWorkStatus == 1 && list[i].devId!=-1) {%>
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].devName%></li>
+							<button style="position: absolute;top:6px;right:120px;height:28px;line-height: 15px;" onclick="more(<%= list[i].devId%>,request_url)">更多</button>
+							<button style="position: absolute;top:6px;right:5px;height:28px;line-height: 15px;width: 110px;" onclick="search_s(<%= list[i].devId%> ,request_url)">申请租借设备</button>
+					</div>	
+					<% } %>
+				<% } %>
+			</ul>
+		</script>
+		
+		<script type="text/html" id="temp_stable_yzj">
+			<h>已租借出的设备</h>
+			<ul class="mui-table-view">
+			<% for(var i = 0;i < list.length;i++){ %>
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].devName%></li>
+							<button style="position: absolute;top:6px;right:20%;height:28px;line-height: 15px;" onclick="more(<%= list[i].devId%>,request_url)">更多</button>
+							<% var temp = 0;%>
+							<% for(var j = 0;j < fl_list.length;j++){%>
+								<%	if(list[i].devId == fl_list[j].devId) {%>
+									<% temp = 1; %>
+									<button style="position: absolute;top:6px;right:1.5%;height:28px;line-height: 15px;">已关注</button>
+									<% break; %>
+								<%	}%>
+							<%	}%>	
+							<% if(temp == 0) {%>
+							<button style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;" onclick="search_yzj(<%= list[i].devId%> ,request_url)">关注</button >
+							<% }%>
+					</div>	
+				<% } %>
+			</ul>
+		</script>
+		<!-- script type="text/html" id="temp_stable">
+			< for(var i = 0;i < list.length;i++){ %>
+								
+					<tr>
+			            <td><%= list[i].devId %></td>
+			            <td><%= list[i].devType %></td>
+						<td><%= list[i].managerAccount %></td>
+						<td><%= list[i].devStatus %></td>
+						<td><%= list[i].devAuth %></td>
+					</tr> 
+				    		
+				< } %>
+				</script>
+		<style>
+		    .table {
+		            border: 1px solid #cad9ea;
+		            color: #666;
+		        }
+		        .table th {
+		            background-repeat: repeat-x;
+		            height: 30px;
+		        }
+		        .table td,
+		        .table th {
+		            border: 1px solid #cad9ea;
+		            padding: 0 1em 0;
+		        }
+		        .table tr.alter {
+		            background-color: #f5fafe;
+		        }
+		</style -->
+		
+	</head>
+
+	<body onload="search(request_url)">
+		<!-- div style="margin-top:50px;" id="searchtable">
+		    <table width="100%" class="table" id="tablevalue" style="font-size: 10px;">
+				<thead>
+					<tr>
+						<th width="20%">序号</th>
+						<th width="20%">类型</th>
+						<th width="20%">管理员</th>
+						<th width="20%">设备状态</th>
+						<th width="20%">设备权限</th>
+					</tr>
+				</thead>
+				<tbody id="tb"></tbody>
+		            < <tr><td></td><td></td></tr> >
+		    </table>
+		</div -->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设备查询</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+		<div id="tb"></div>
+		<div id="tb_yzj"></div>
+		<script type="text/javascript">
+					mui.init()
+					var request_url = localStorage.getItem('request_url');
+				</script>
+		<nav class="mui-bar mui-bar-tab" style="touch-action: none;" onclick="search(request_url)">
+			<a class="mui-tab-item" href="#tabbar-with-search">
+				<span class="mui-icon mui-icon-loop"></span>
+				<span class="mui-tab-label">刷新</span>
+			</a>
+		</nav>
+		<script type="text/javascript">
+					mui.init()
+					var request_url = localStorage.getItem('request_url');
+				</script>
+	</body>
+
+</html>

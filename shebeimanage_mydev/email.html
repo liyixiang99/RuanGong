@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/email.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			localStorage.setItem('request_url','http://aaedion.club:8002/api/');
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">绑定邮箱</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+		
+			<h style="margin-left: 3%;">请输入邮箱信息</h>
+			<form class="mui-input-group">
+			    <div class="mui-input-row">
+			        <label>邮箱</label>
+			        <input id="user_email" type="text" class="mui-input-clear" style="position: absolute;margin-left: -10%" placeholder="请输入邮箱">
+			    </div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id="user_password" type="password" class="mui-input-password" style="position: absolute;margin-left: -10%" placeholder="请输入用户密码(非邮箱密码)">
+				</div>
+				<script type="text/javascript">
+							mui.init()
+							var request_url = localStorage.getItem('request_url');
+						</script>
+				<div class="mui-button-row">
+					<button type="button" class="mui-btn mui-btn-primary" style="width: 40%;" onclick = "yes_email(request_url)")>确认</button>
+					<!--button type="button" class="mui-btn mui-btn-danger" style="width: 40%;">取消</button -->
+				</div>
+			</form>
+	</body>
+
+</html>
