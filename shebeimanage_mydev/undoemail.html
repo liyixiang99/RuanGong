@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/unbindemail.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">解绑邮箱</h1>
+		</header>
+		<div class="mui-content" style="margin-top:10px;"></div>
+		
+			<h style="margin-left: 2%;">您已绑定邮箱，可点击下面按钮进行解绑</h>
+			<button type="button" class="mui-btn mui-btn-warning" style="width: 80%; height: 40px; margin-left: 10%; margin-top: 5%; font-size: 20px; " onclick = "unbind_mail(request_url)">解 绑</button>
+	</body>
+
+</html>

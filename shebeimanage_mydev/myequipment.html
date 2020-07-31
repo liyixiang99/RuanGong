@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/template.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/myequ.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+				　　　　 //获得父页面的webview
+				        var list = plus.webview.currentWebview().opener();
+				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+				        mui.fire(list, 'refresh');
+				        //返回true,继续页面关闭逻辑
+				        return true;
+				    }
+			});
+			localStorage.setItem('request_url', 'http://aaedion.club:8002/api/'); //前半部分固定URL
+		</script>
+		<script type="text/html" id="temp_stable">
+			<h>负责的设备</h>
+			<ul class="mui-table-view">
+				<% if(list.length==0) {%>
+					<li class="mui-table-view-cell">您当前暂无负责的设备!</li>
+				<% } %>
+			<% for(var i = 0;i < list.length;i++){ %>		
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].devName%></li>
+							<% if(list[i].devWorkStatus=='正常') {%>
+								<span class="mui-badge mui-badge-success"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='报废') {%>
+								<span class="mui-badge mui-badge-danger"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='故障') {%>
+								<span class="mui-badge mui-badge-warning"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='维修') {%>
+								<span class="mui-badge mui-badge-primary"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='待报废') {%>
+								<span class="mui-badge mui-badge-purple"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<button style="position: absolute;top:6px;right:25%;height:28px;line-height: 15px;" onclick="more(<%=i%>,request_url)">更多</button>
+							<select id="record-<%=i%>" class="mui-btn" style="position: absolute;top:1px;right: 3%;height:33px;line-height: 15px;width: 80px;" onchange="add_record(request_url,<%= list[i].devId%>,<%=i%>)">
+								<option value="item-1">添加记录</option>
+								<option value="item-2">添加修理记录</option>
+								<option value="item-3">添加故障记录</option>
+								<option value="item-4">添加报废记录</option>
+							</select>
+					</div>		
+				<% } %>
+			</ul>
+				</script>
+		<script type="text/html" id="temp_zu">
+			<h>租借到的设备</h>
+			<ul class="mui-table-view">
+				<% if(list.length==0) {%>
+					<li class="mui-table-view-cell">您当前暂无租借到的设备!</li>
+				<% } %>
+			<% for(var i = 0;i < list.length;i++){ %>		
+					<div class="mui-table-view">
+						<li class="mui-table-view-cell"><%= list[i].devName%></li>
+							<% if(list[i].devWorkStatus=='正常') {%>
+								<span class="mui-badge mui-badge-success"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='报废') {%>
+								<span class="mui-badge mui-badge-danger"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='故障') {%>
+								<span class="mui-badge mui-badge-warning"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='维修') {%>
+								<span class="mui-badge mui-badge-primary"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<% if(list[i].devWorkStatus=='待报废') {%>
+								<span class="mui-badge mui-badge-purple"  style="position: absolute;top:11px;left:35%;"><%= list[i].devWorkStatus%></span>
+							<% } %>
+							<button style="position: absolute;top:6px;right: 39.5%;height:28px;line-height: 15px;" onclick="more_zujie(<%=i%>,request_url)">更多</button>
+							<!--select id="record-<%=i%>" class="mui-btn" style="position: absolute;top:1px;right: 18%;height:33px;line-height: 15px;width: 80px;" onchange="add_record(request_url,<%= list[i].devId%>,<%=i%>)">
+								<option value="item-1">添加记录</option>
+								<option value="item-2">添加修理记录</option>
+								<option value="item-3">添加故障记录</option>
+								<option value="item-4">添加报废记录</option>
+							</select-->
+							<button style="position: absolute;top:6px;right: 17%;height:28px;line-height: 15px;" onclick="add_guzhang(<%= list[i].devId%>,request_url)">申请报修</button>
+							<button style="position: absolute;top:6px;right:2%;height:28px;line-height: 15px;" onclick="back(request_url,<%= list[i].devId%>)">归还</button>
+					</div>		
+				<% } %>
+			</ul>
+				</script>
+	</head>
+
+	<body onload="search_fuze_zujie(request_url)">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的设备</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+		<div id="fuze"></div>
+		<div id="zujie"></div>
+		<script type="text/javascript">
+			mui.init()
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</body>
+
+</html>

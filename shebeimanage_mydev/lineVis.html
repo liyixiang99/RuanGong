@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/fun.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+		</script>
+		<title>Gradient Line</title>
+
+		<link href="./css/assets/styles.css" rel="stylesheet" />
+
+		<style>
+			#chart {
+				max-width: 650px;
+				margin: 35px auto;
+				margin-top: 0;
+			}
+		</style>
+
+		<script>
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+				)
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+				)
+			window.Promise ||
+				document.write(
+					'<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+				)
+		</script>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+
+	</head>
+
+	<body>
+		<div id="chart"></div>
+
+		<script>
+			function dateStd(date) {
+				var dates = date.split('/')
+				var day = dates[0]
+				var month = dates[1]
+				// console.log('day:' + day)
+				// console.log('month:' + month)
+				if (day.charAt(0) == '0') {
+					day = day.substring(1)
+				}
+				if (month.charAt(0) == '0') {
+					month = month.substring(1)
+				}
+				return month + "/" + day + "/2020"
+			}
+
+			function drawUserLineVis(countData, dateData) {
+				var options = {
+					series: [{
+						name: '活跃度',
+						data: countData
+					}],
+					chart: {
+						height: 350,
+						type: 'line',
+					},
+					stroke: {
+						width: 7,
+						curve: 'smooth'
+					},
+					xaxis: {
+						type: 'datetime',
+						categories: dateData,
+					},
+					title: {
+						text: '用户活跃度',
+						align: 'left',
+						style: {
+							fontSize: "16px",
+							color: '#666'
+						}
+					},
+					fill: {
+						type: 'gradient',
+						gradient: {
+							shade: 'dark',
+							gradientToColors: ['#FDD835'],
+							shadeIntensity: 1,
+							type: 'horizontal',
+							opacityFrom: 1,
+							opacityTo: 1,
+							stops: [0, 100, 100, 100]
+						},
+					},
+					markers: {
+						size: 4,
+						colors: ["#FFA41B"],
+						strokeColors: "#fff",
+						strokeWidth: 2,
+						hover: {
+							size: 7,
+						}
+					},
+					yaxis: {
+						min: 0,
+						max: 1700,
+						title: {
+							text: '活跃度',
+						},
+					}
+				};
+
+				var chart = new ApexCharts(document.querySelector("#chart"), options);
+				chart.render();
+			}
+			var countData = new Array()
+			var dateData = []
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				mui('body').on('click', 'a', function() {
+					document.location.href = this.href;
+				});
+				mui.plusReady(function() {
+					var self = plus.webview.currentWebview();
+					user = self.user;
+				});
+				user = self.user;
+				var t = 0
+				var url = "http://39.102.35.212/getUserInfo.php?userAccount=" + user.userAccount
+				mui.ajax({
+					type: 'GET',
+					url: url,
+					dataType: "string",
+					success: function(data) {
+						while (data.indexOf('\n') != -1) {
+							data = data.replace('\n', ' ')
+						}
+						words = data.split(' ')
+						for (let i = 0; i < words.length; i = i + 2) {
+							if (words[i].length <= 5) break
+							datestd = dateStd(words[i])
+							dateData.push(datestd)
+							countData[t] = words[i + 1]
+							t++
+						}
+						console.log("arrive")
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast("服务器内部出错！");
+					}
+				});
+			})
+
+			function sleep(interval) {
+				return new Promise(resolve => {
+					setTimeout(resolve, interval);
+				})
+			}
+
+			async function oneAsync(countData, dateData) {
+				await sleep(500);
+				console.log(dateData.length)
+				for (let i = 0; i < dateData.length; i++) {
+					console.log(typeof(dateData[i]))
+					console.log(dateData[i])
+				}
+				drawUserLineVis(countData, dateData)
+			}
+			oneAsync(countData, dateData)
+		</script>
+
+
+	</body>
+</html>

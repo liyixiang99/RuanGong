@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/mine.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var user;
+			mui('body').on('click', 'a', function() {
+				document.location.href = this.href;
+			});
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				user = self.user;
+			});
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</head>
+
+	<body onload="load_xian_my()">
+		<!-- <header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">我的</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+		<div class="mui-list-unstyled">
+			<img src="images/head.jpg" id="head_img" style="margin-left: 250px; border-radius:100px;width:100px;height:100px" alt="" />
+			<h1 style="margin-left: 20px;margin-top: -45px;">用户名</h1>
+		</div>
+		<button type="button" class="mui-btn" style="margin-top: 380px; margin-left: 30px; width:300px; font-size:16px; color: red;">注 销</button>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="#tabbar-with-home" onclick="to_main(user)">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">主页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-search"  onclick="to_search(user)">
+				<span class="mui-icon mui-icon-search"></span>
+				<span class="mui-tab-label">设备查询</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-person"  onclick="to_mine(user)">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav> -->
+		<header class="mui-bar mui-bar-nav">
+			  <a onclick="quit_login()" class="mui-icon mui-icon-right-nav mui-pull-right "><span style="font-size: 16px; line-height: 20px; height: 20px; color: red;">注销</span></a>
+			<h1 class="mui-title">我的</h1>
+		</header>
+
+
+		<div class="mui-content" style="background-color: #cdffe5; height: 200px;"></div>
+		<div class="mui-list-unstyled">
+			<img src="images/3.jpg" id="head_img" style="position: absolute; margin-top: -120px; margin-left: 70%; border-radius:100px;width:100px;height:100px">
+			<h1 id="my_username" style="position: absolute; margin-left: 3%;margin-top: -80px;"></h1>
+			<h1 id="my_auth" style="position: absolute; margin-left: 20px;margin-top: -30px; font-size: 16px;"></h1>
+		</div>
+
+
+		<ul class="mui-table-view">
+			<li onclick="to_myinfo(user)" class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/account_flat.png" style="width:20px;height:20px">
+					<div class="mui-media-body">个人信息</div>
+				</a>
+			</li>
+			<li onclick="is_bind_mail(request_url,user)" class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/mail_flat.png" style="width:20px;height:20px">
+					<div class="mui-media-body">绑定邮箱</div>
+				</a>
+			</li>
+			<li onclick="to_question(user)" class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/massage_flat.png" style="width:20px;height:20px">
+					<div class="mui-media-body">意见反馈</div>
+				</a>
+			</li>
+			<li onclick="to_about()" class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<img class="mui-media-object mui-pull-left" src="images/crown_flat.png" style="width:20px;height:20px">
+					<div class="mui-media-body">关于</div>
+				</a>
+			</li>
+		</ul>
+
+
+		
+
+		<iframe src="lineVis.html" width="100%" height="400px" scrolling="auto" frameborder="no" style="margin-top: -0px;"></iframe>
+
+
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="#tabbar-with-home" style="touch-action: none;" onclick="to_main(user)">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">主页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-search" style="touch-action: none;" onclick="to_arrange(user)">
+				<span class="mui-icon mui-icon-list"></span>
+				<span class="mui-tab-label">待办</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-person" style="touch-action: none;" onclick="to_mine(user)">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+	</body>
+
+</html>

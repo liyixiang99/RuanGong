@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/arrange.js"></script>
+		<script src="js/search.js"></script>
+		<script src="js/template.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+				　　　　 //获得父页面的webview
+				        var list = plus.webview.currentWebview().opener();
+				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+				        mui.fire(list, 'refresh');
+				        //返回true,继续页面关闭逻辑
+				        return true;
+				    }
+			});
+			var user;
+			mui('body').on('click', 'a', function() {
+				document.location.href = this.href;
+			});
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+				user = self.user;
+			});
+			window.addEventListener('refresh_a', function(e){//执行刷新
+			    location.reload();
+			 });
+		</script>
+	</head>
+
+	<body onload="load_dai(request_url)">
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">待办</h1>
+		</header>
+
+		<div class="mui-content" style="background-color: #AAAAFF; height: 190px;  width: 50%;"></div>
+		<div class="mui-content" style="background-color: #EAC100; height: 190px; margin-top:-190px; margin-left: 50%; width:50%"></div>
+		<div class="mui-content" style="background-color: #FFFFDF; height: 424px;"></div>
+
+
+
+		<img src="images/zi33.png" style="position: absolute; margin-top: -560px; margin-left: 10%; width:100px; height:100px">
+		<button onclick="to_search(user)" type="button" style="position: absolute; margin-top: -574px; width: 50%; height: 150px;  background: transparent; font-size:16px; color: #ffffff; line-height: 260px;">租借设备</button>
+
+
+		<img src="images/zi18.png" style="position: absolute; margin-top: -560px; margin-left: 62%; width:100px; height:100px">
+		<button onclick="to_buymore(user)" type="button" style="position: absolute; margin-top: -574px; margin-left: 50%; width: 50%; height: 150px;  background: transparent; font-size:16px; color: #ffffff; line-height: 260px;">购置设备</button>
+
+		<!-- <h1 style="margin-left: 10px; margin-top: -410px;font-size: 16px;">待办事项</h1> -->
+		<div id="bao_arrange"></div>
+		<script type="text/html" id="temp_arrange">
+			<h1 style="margin-left: 10px; margin-top: -410px;font-size: 16px;">待办事项</h1>
+			<ul class="mui-table-view">
+			<% if((bao_list.length==0)&&(buy_list.length==0)&&(xiu_list.length==0)) {%>
+				<li class="mui-table-view-cell">您当前暂无待办事项!</li>
+			<% } %>
+			<% for(var i = 0;i < buy_list.length;i++){ %>
+				<div class="mui-table-view"><!-- 分配设备管理员 -->
+					<li class="mui-table-view-cell"><%= buy_list[i].tokenId%></li>
+						<button style="position: absolute;top:6px;right:44%;height:28px;line-height: 15px;" onclick="more_arr(<%=buy_list[i].devId%>,request_url,1)">更多</button>
+						<select id="sel_manager-<%=i%>" class="mui-btn" style="position: absolute;top:2px;right: 18%;height:33px;line-height: 15px;width: 95px;">
+							<option>选择管理员</option>
+							<% for(var j = 0;j < manager_list.length;j++){ %>
+								<option value="<%= manager_list[j].userAccount%>"><%= manager_list[j].userAccount%></option>
+							<% } %>
+						</select>
+						<button style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;" onclick="who_manager(<%=i%>,<%= buy_list[i].logId%>,request_url)">确认</button>
+				</div>
+			<% } %>
+			<% for(var i = 0;i < bao_list.length;i++){ %>
+				<div class="mui-table-view">
+					<li class="mui-table-view-cell"><%= bao_list[i].tokenId%></li>
+						<button style="position: absolute;top:6px;right:35%;height:28px;line-height: 15px;" onclick="more_arr(<%=bao_list[i].devId%>,request_url,0)">更多</button>
+						<button style="position: absolute;top:6px;right:19%;height:28px;line-height: 15px;" onclick="yes_arrange(<%= bao_list[i].logId%>,request_url,0)">确认</button>
+						<button style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;" onclick="no_arrange(<%= bao_list[i].logId%>,request_url,0)">驳回</button>
+				</div>
+			<% } %>	
+			<% for(var i = 0;i < xiu_list.length;i++){ %>
+				<div class="mui-table-view">
+					<li class="mui-table-view-cell"><%= xiu_list[i].tokenId%></li>
+						<button style="position: absolute;top:6px;right:35%;height:28px;line-height: 15px;" onclick="more_arr(<%=xiu_list[i].devId%>,request_url,2)">更多</button>
+						<button style="position: absolute;top:6px;right:19%;height:28px;line-height: 15px;" onclick="yes_arrange(<%= xiu_list[i].logId%>,request_url,1)">确认</button>
+						<button style="position: absolute;top:6px;right:3%;height:28px;line-height: 15px;" onclick="no_arrange(<%= xiu_list[i].logId%>,request_url,1)">驳回</button>
+				</div>
+			<% } %>	
+			</ul>
+			</script>
+
+
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="#tabbar-with-home" style="touch-action: none;" onclick="to_main(user)">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">主页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-search" style="touch-action: none;" onclick="to_arrange(user)">
+				<span class="mui-icon mui-icon-list"></span>
+				<span class="mui-tab-label">待办</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-person" style="touch-action: none;" onclick="to_mine(user)">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<script type="text/javascript">
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</body>
+
+</html>

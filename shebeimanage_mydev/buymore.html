@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/fun.js"></script>
+		<script src="js/buymore.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+				　　　　 //获得父页面的webview
+				        var list = plus.webview.currentWebview().opener();
+				　　　　 //触发父页面的自定义事件(refresh),从而进行刷新
+				        mui.fire(list, 'refresh_a');
+				        //返回true,继续页面关闭逻辑
+				        return true;
+				    }
+			});
+			localStorage.setItem('request_url', 'http://aaedion.club:8002/api/'); //前半部分固定URL
+		</script>
+		<script type="text/javascript">
+			function diy_input(in_id,zhi){
+				mui.init();
+				mui.plusReady(function() {
+					document.getElementById(in_id).value = zhi;
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">填写设备详情</h1>
+		</header>
+		<div class="mui-content" style="margin-top:20px;"></div>
+
+		<form class="mui-input-group">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse">
+					<label>名称</label>
+					<a class="mui-navigate-right" href="#" style="position: absolute;top:2px;left:31%;"><input id="dev_name" type="text" class="mui-input-clear" placeholder="请输入设备名称"></a>
+					<div class="mui-collapse-content">
+						<p>
+							<ul class="mui-table-view" style="top:-15px; margin-left: 20%;">
+									<li onclick="diy_input('dev_name','dev_1')" class="mui-table-view-cell">
+					                    dev_1
+									</li>
+									<li onclick="diy_input('dev_name','dev_2')" class="mui-table-view-cell">
+										dev_2
+									</li>
+									<li onclick="diy_input('dev_name','dev_3')" class="mui-table-view-cell">
+										dev_3
+									</li>
+								</ul>
+						</p>
+					</div>
+				</li>
+			</ul>
+			<!-- <div class="mui-input-row">
+				<label>名称</label>
+				<input id="dev_name" type="text" class="mui-input-clear" placeholder="请输入设备名称">
+			</div> -->
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse">
+					<label>类型</label>
+					<a class="mui-navigate-right" href="#" style="position: absolute;top:2px;left:31%;"><input id="dev_type" type="text" class="mui-input-clear" placeholder="请输入设备类型"></a>
+					<div class="mui-collapse-content">
+						<p>
+							<ul class="mui-table-view" style="top:-15px; margin-left: 20%;">
+									<li onclick="diy_input('dev_type','type_1')" class="mui-table-view-cell">
+					                    type_1
+									</li>
+									<li onclick="diy_input('dev_type','type_2')" class="mui-table-view-cell">
+										type_2
+									</li>
+									<li onclick="diy_input('dev_type','type_3')" class="mui-table-view-cell">
+										type_3
+									</li>
+								</ul>
+						</p>
+					</div>
+				</li>
+			</ul>
+			<!-- <div class="mui-input-row">
+				<label>类型</label>
+				<input id="dev_type" type="text" class="mui-input-clear" placeholder="请输入设备类型">
+			</div> -->
+			<div class="mui-input-row">
+				<label>数量</label>
+				<input id="dev_num" type="text" class="mui-input-clear" placeholder="请输入设备数量">
+			</div>
+			<div class="mui-input-row">
+				<label>价格(元)</label>
+				<input id="dev_prise" type="text" class="mui-input-clear" placeholder="请输入设备价格">
+			</div>
+			<div class="mui-input-row">
+				<label>保质期(天)</label>
+				<input id="dev_period" type="text" class="mui-input-clear" placeholder="请输入设备保质期">
+			</div>
+			<!-- <div class="mui-input-row">
+			    <label>经办人</label>
+			    <input id="charge_account" type="text" class="mui-input-clear" placeholder="请输入设备经办人账号">
+			</div> -->
+			<!-- <div class="mui-input-row">
+				<label>设备负责人</label>
+				<input id="manager_account" type="text" class="mui-input-clear" placeholder="请输入设备负责人账号">
+			</div> -->
+			<!-- <ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse">
+					<label>设备权限</label>
+					<a class="mui-navigate-right" href="#" style="position: absolute;top:2px;left:31%;"><input id="dev_auth_t" type="text" class="mui-input-clear" placeholder="请输入设备权限"></a>
+					<div class="mui-collapse-content">
+						<p>
+							<ul class="mui-table-view" style="top:-15px;">
+									<li onclick="diy_input('dev_auth_t',1)" class="mui-table-view-cell">
+					                    1
+									</li>
+									<li onclick="diy_input('dev_auth_t',2)" class="mui-table-view-cell">
+										2
+									</li>
+									<li onclick="diy_input('dev_auth_t',3)" class="mui-table-view-cell">
+										3
+									</li>
+								</ul>
+						</p>
+					</div>
+				</li>
+			</ul> -->
+			<div class="mui-input-row">
+				<label>设备权限</label>
+				<select id="dev_auth" class="mui-btn mui-btn-block" style="left: -16%; width: 200px;">
+									<option value="item-0">请选择设备权限</option>
+									<option value="1">初级</option>
+									<option value="2">中级</option>
+									<option value="3">高级</option>
+								</select>
+				<!-- <input id="dev_auth" type="text" class="mui-input-clear" placeholder="请输入设备权限"> -->
+			</div>
+		</form>
+		<button onclick="finish(request_url)" type="button" class="mui-btn mui-btn-success" style="margin-left: 30px; margin-top: 10px; width: 150px;">提交</button>
+		<button onclick="quit()" type="button" class="mui-btn mui-btn-danger" style="margin-top: 10px; margin-left: 20px; width: 150px;">取消</button>
+		<script type="text/javascript">
+			mui.init()
+			var request_url = localStorage.getItem('request_url');
+		</script>
+	</body>
+
+</html>

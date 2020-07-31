@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.css" rel="stylesheet" />
+		<script src="js/mui.js"></script>
+		<script src="js/myinfo.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</head>
+
+	<body onload="my_info()">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">个人信息</h1>
+		</header>
+		
+		
+		
+		<div class="mui-content" style="background-color: #cdffe5; height: 200px;"></div>
+		<div class="mui-list-unstyled">
+			<img src="images/3.jpg" id="head_img" style="position: absolute; margin-top: -120px; margin-left: 70%; border-radius:100px;width:100px;height:100px">
+			<h1 id="username1" style="position: absolute; margin-left: 7%;margin-top: -80px;"></h1>
+		</div>
+		
+		
+		
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<h>用户名</h>
+					<div id="username" class="mui-media-body" style="margin-top: -20px; margin-left: 20%;"></div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<h>账号</h>
+					<div id="myinfo_hao" class="mui-media-body" style="margin-top: -20px; margin-left: 20%;"></div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<h>权限</h>
+					<div id="myinfo_auth" class="mui-media-body" style="margin-top: -20px; margin-left: 20%;"></div>
+				</a>
+			</li>
+			<!-- <li class="mui-table-view-cell mui-media">
+				<a href="javascript:;">
+					<h>id</h>
+					<div id="myinfo_id" class="mui-media-body" style="margin-top: -20px; margin-left: 20%;"></div>
+				</a>
+			</li> -->
+		</ul>
+	</body>
+
+</html>
